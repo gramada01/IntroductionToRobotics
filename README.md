@@ -20,6 +20,7 @@ In order to use the the RGB LED(which has a common anode) i had to calculate wha
 
 #### [Video of project implementation](https://www.youtube.com/watch?v=72QZH-2uAGI)
 
+
 ## Homework #2 : Traffic lights system
 
 ### 1. Task:
