@@ -56,3 +56,65 @@ Implementation was done gradually both in terms of hardware and software:
 
 
 #### [Video of project implementation](https://youtu.be/X22UugSl8GE?si=Flerypy0by5hy_sm)
+
+
+## Homework #3 : Home Alarm System
+
+### 1. Task:
+
+Create a home alarm system with multiple sensors, password protection, and a menu-based interface. The system should detect intruders using an ultrasonic sensor and automatically arm when light levels drop below a threshold using a photoresistor (LDR). The system includes a buzzer for alarms, status LEDs, and a joystick for menu navigation.
+
+### 2. Implementation:
+
+The system was built using object-oriented programming principles with a SecuritySystem class that manages all functionality:
+
+####1. Hardware Components:
+   - Ultrasonic sensor connected to pins 5 (trigger) and A5 (echo) for distance measurement and intruder detection
+   - Photoresistor (LDR) connected to pin A4 with a 10k ohm pull-down resistor to detect ambient light levels
+   - Buzzer connected to PWM pin 6 with a 100 ohm resistor for alarm sounds
+   - Red LED on pin 11 (blinks when alarm is triggered) with a 220 ohm resistor
+   - Green LED on pin 10 (indicates disarmed state) with a 220 ohm resistor
+   - Joystick with Y-axis on pin A3 and button on interrupt pin 2 (with internal pull-up) for menu navigation
+
+####2. Core Functionality:
+   - System starts armed by default and loads settings from EEPROM on boot
+   - Ultrasonic sensor continuously monitors distance; if an object gets closer than the threshold (default 15cm), the alarm is triggered
+   - LDR sensor monitors light levels; when light drops below threshold (default 300), the system automatically arms after a 3-second delay
+   - Password-protected disarming via serial input
+   - Alarm triggers red LED blinking and buzzer pulsing when activated
+
+####3. Menu System:
+   - Interactive menu system navigated with joystick (up/down to move, press to select)
+   - Two main menus: armed state (only "Disarm System") and disarmed state with multiple options
+   - Disarmed menu includes: "Arm System", "Alarm test", and "Settings"
+   - Settings submenu allows configuration of:
+     - Ultrasonic sensitivity (distance threshold in cm)
+     - LDR light threshold (0-1023)
+     - Buzzer tone/frequency (1-10000 Hz)
+     - System name (1-50 characters)
+     - Password change (3-20 characters, requires old password)
+
+####4. EEPROM Storage:
+   - All settings are saved to EEPROM and persist across power cycles
+   - Stored settings include: distance threshold, LDR threshold, buzzer tone, system name, and password
+   - Uses a magic number system to detect if EEPROM has been initialized
+
+####5. Alarm System:
+   - When triggered, the red LED blinks at 250ms intervals
+   - Buzzer pulses with customizable tone (300ms on, 100ms off)
+   - Alarm can only be stopped by entering the correct password via serial interface
+   - Test mode allows manual activation/deactivation of alarm for testing
+
+####6. Software Architecture:
+   - Menu class handles menu display and navigation
+   - SecuritySystem class encapsulates all system logic and state management
+   - Interrupt service routine for joystick button press detection
+   - Serial input processing for password entry and settings configuration
+   - Non-blocking timing using millis() for delays, LED blinking, and buzzer pulsing
+
+#### Setup:
+![Setup1](/Homework_3/Setup1.jpeg "Setup1")
+![Setup2](/Homework_3/Setup2.jpeg "Setup2")
+
+
+#### [Video of project implementation](https://youtu.be/LuozW9B1iD8?si=7r7UkfISAJgOqg5x)
