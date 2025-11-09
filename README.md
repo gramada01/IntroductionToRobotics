@@ -68,7 +68,7 @@ Create a home alarm system with multiple sensors, password protection, and a men
 
 The system was built using object-oriented programming principles with a SecuritySystem class that manages all functionality:
 
-####1. Hardware Components:
+#### 1. Hardware Components:
    - Ultrasonic sensor connected to pins 5 (trigger) and A5 (echo) for distance measurement and intruder detection
    - Photoresistor (LDR) connected to pin A4 with a 10k ohm pull-down resistor to detect ambient light levels
    - Buzzer connected to PWM pin 6 with a 100 ohm resistor for alarm sounds
@@ -76,14 +76,14 @@ The system was built using object-oriented programming principles with a Securit
    - Green LED on pin 10 (indicates disarmed state) with a 220 ohm resistor
    - Joystick with Y-axis on pin A3 and button on interrupt pin 2 (with internal pull-up) for menu navigation
 
-####2. Core Functionality:
+#### 2. Core Functionality:
    - System starts armed by default and loads settings from EEPROM on boot
    - Ultrasonic sensor continuously monitors distance; if an object gets closer than the threshold (default 15cm), the alarm is triggered
    - LDR sensor monitors light levels; when light drops below threshold (default 300), the system automatically arms after a 3-second delay
    - Password-protected disarming via serial input
    - Alarm triggers red LED blinking and buzzer pulsing when activated
 
-####3. Menu System:
+#### 3. Menu System:
    - Interactive menu system navigated with joystick (up/down to move, press to select)
    - Two main menus: armed state (only "Disarm System") and disarmed state with multiple options
    - Disarmed menu includes: "Arm System", "Alarm test", and "Settings"
@@ -94,18 +94,18 @@ The system was built using object-oriented programming principles with a Securit
      - System name (1-50 characters)
      - Password change (3-20 characters, requires old password)
 
-####4. EEPROM Storage:
+#### 4. EEPROM Storage:
    - All settings are saved to EEPROM and persist across power cycles
    - Stored settings include: distance threshold, LDR threshold, buzzer tone, system name, and password
    - Uses a magic number system to detect if EEPROM has been initialized
 
-####5. Alarm System:
+#### 5. Alarm System:
    - When triggered, the red LED blinks at 250ms intervals
    - Buzzer pulses with customizable tone (300ms on, 100ms off)
    - Alarm can only be stopped by entering the correct password via serial interface
    - Test mode allows manual activation/deactivation of alarm for testing
 
-####6. Software Architecture:
+#### 6. Software Architecture:
    - Menu class handles menu display and navigation
    - SecuritySystem class encapsulates all system logic and state management
    - Interrupt service routine for joystick button press detection
@@ -118,3 +118,82 @@ The system was built using object-oriented programming principles with a Securit
 
 
 #### [Video of project implementation](https://youtu.be/LuozW9B1iD8?si=7r7UkfISAJgOqg5x)
+
+
+## Homework #4 : Simon Says Game
+
+### 1. Task:
+
+Create a memory-based game implemented on Arduino with 4 seven-segment displays. Players must remember and recreate a sequence of characters shown on the displays. The game displays a random sequence that players must replicate. The difficulty increases as the score increases by reducing the display time.
+
+### 2. Implementation:
+
+#### Hardware Components:
+
+1. Shift Register (74HC595): Controls 7-segment display segments via pins 10 (clock), 11 (latch), 12 (data)
+2. 7-Segment Displays (4 digits): Common cathode, digit control pins on 4, 5, 6, 7
+3. Joystick: X-axis on A4, Y-axis on A5, button on pin 2 (interrupt)
+4. Pause Button: Pin 3 (interrupt)
+5. Buzzer: Pin A3 for audio feedback
+
+#### Pin Map:
+
+| Pin | Component | Function |
+|-----|-----------|----------|
+| 2 | Joystick Button | Select/lock digit, submit answer |
+| 3 | Pause Button | Return to menu |
+| 4-7 | Display Digits | Control pins for 4 digits (D1-D4) |
+| 10 | Shift Register | Clock pin |
+| 11 | Shift Register | Latch pin |
+| 12 | Shift Register | Data pin |
+| A3 | Buzzer | Audio feedback |
+| A4 | Joystick | X-axis (cursor navigation) |
+| A5 | Joystick | Y-axis (value selection) |
+
+#### Font Table:
+
+The font table contains 23 character encodings stored in an array. Each character is encoded as an 8-bit value where bits represent which segments (A-G, DP) should be lit on the 7-segment display.
+
+Characters: 0-9, A-F, L, P, R, t, y, U, blank (22)
+
+#### Blink Rates:
+
+- Default blink: 125ms (unselected digits) - 4 Hz
+- Selected blink: 500ms (locked digit for editing) - 1 Hz
+
+#### Game Flow:
+
+The game has 6 main states:
+1. MENU: Navigate options (PLAY, SCORE, STOP) with joystick
+2. TRANSITION: Display sequence to memorize (5s initially, decreases with score to minimum 1s)
+3. GAME: Player inputs answer - navigate digits (X-axis), lock/unlock (button), change value (Y-axis), submit with long press (4s)
+4. ERROR: Show "ERR", play error tone, return to menu after 3s
+5. SUCCESS: Show scrolling "SUCCESS" animation, play jingle, continue to next round
+6. SHOW SCORE: Display high score
+
+#### State diagram:
+
+![State Diagram](Homework_4/states_diagram.PNG "State Diagram")
+
+
+#### Buzzer Feedback:
+
+- Tick sound (800Hz) on cursor movement
+- Click sound (1000Hz) on digit lock/unlock
+- Success jingle (C5, E5, G5, C6) on correct answer
+- Error tone (200Hz) on wrong answer
+
+#### Software Implementation:
+
+The implementation uses:
+- State machine for game flow (menu, transition, game, error, success, score display)
+- Multiplexed display update using time-division multiplexing
+- Joystick state machine for movement detection with debouncing
+- Interrupt handlers for button presses (joystick button on pin 2, pause button on pin 3)
+- Non-blocking buzzer state machine for audio feedback (tick, click, success jingle, error tone)
+
+##### Setup:
+![Setup1](Homework_4/Setup1.jpeg "Setup1")
+![Setup2](Homework_4/Setup2.jpeg "Setup2")
+
+##### [Video of project implementation](www.youtube.com/watch?si=do9-XBukSV2xMDvC&v=fBjtA5D0sWo&feature=youtu.be)
