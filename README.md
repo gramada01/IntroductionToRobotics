@@ -196,4 +196,4 @@ The implementation uses:
 ![Setup1](Homework_4/Setup1.jpeg "Setup1")
 ![Setup2](Homework_4/Setup2.jpeg "Setup2")
 
-##### [Video of project implementation](www.youtube.com/watch?si=do9-XBukSV2xMDvC&v=fBjtA5D0sWo&feature=youtu.be)
+##### [Video of project implementation](https://www.youtube.com/watch?si=do9-XBukSV2xMDvC&v=fBjtA5D0sWo&feature=youtu.be)
