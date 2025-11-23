@@ -197,3 +197,87 @@ The implementation uses:
 ![Setup2](Homework_4/Setup2.jpeg "Setup2")
 
 ##### [Video of project implementation](https://www.youtube.com/watch?si=do9-XBukSV2xMDvC&v=fBjtA5D0sWo&feature=youtu.be)
+
+
+
+## Homework #5 : LCD Platformer (16x2) with Clean Architecture
+
+### 1. Task:
+
+Create a side-scrolling platformer game (inspired by Super Mario) on a 16x2 LCD display. The primary requirement was to implement Clean Architecture (Separation of Concerns), ensuring that game logic is completely decoupled from hardware rendering. The game features procedural level generation, physics-based movement (gravity, jumping), enemy interactions, and a high-score system saved in persistent memory.
+
+### 2. Implementation:
+
+#### Hardware Components:
+
+1. Arduino Uno: The main controller.
+2. 16x2 LCD Display: Connected in 4-bit mode.
+3. Joystick: Used for player movement (X-axis) and menu navigation (Y-axis).
+4. Push Button: Integrated into the joystick (SW) for interactions.
+
+#### Pin Map:
+
+| Pin | Component | Function |
+|-----|-----------|----------|
+| 2 | Joystick Button | Jump / Select |
+| 4 | LCD D7 | Data Line 7 |
+| 5 | LCD D6 | Data Line 6 |
+| 6 | LCD D5 | Data Line 5 |
+| 7 | LCD D4 | Data Line 4 |
+| 8 | LCD EN | Enable Pin |
+| 9 | LCD RS | Register Select |
+| A4 | Joystick X | Move Left / Right |
+| A5 | Joystick Y | Menu Navigation |
+| A0 | Unconnected | Source of random noise for Seed |
+
+#### Custom Characters:
+
+1. Mario Run
+
+![Mario Run](Homework_5/Mario_Run.png "Mario Run")
+
+2. Mario Jump
+
+![Mario Jump](Homework_5/Mario_Jump.png "Mario Jump")
+
+3. Platform Block
+
+![Platform Block](Homework_5/Platform_Block.png "Platform Block")
+
+4. Enemy / Goomba
+
+![Enemy](Homework_5/Enemy.png "Enemy")
+
+5. Coin
+
+![Coin](Homework_5/Coin.png "Coin")
+
+6. Finish Flag
+
+![Finish Flag](Homework_5/Finish_Flag.png "Finish Flag")
+
+#### Game Flow:
+
+The game has 5 main states:
+1. MENU: Navigate options (Play, Highscores) with joystick.
+2. PLAYING: Real-time gameplay. Input controls player; physics handles gravity, collisions, and scrolling.
+3. HIGHSCORE: Displays top 3 scores saved in EEPROM.
+4. GAMEOVER: Displayed when the player dies (hits enemy or pit). Saves score if it qualifies.
+5. WIN: Displayed when the player reaches the flag. Adds time bonus to score.
+
+#### State diagram:
+
+![State Diagram](Homework_5/states_diagram.PNG "State Diagram")
+
+#### Software Implementation:
+
+The implementation uses the Model-View-Controller (MVC) pattern for Clean Architecture:
+- GameModel (Logic): Handles physics, collisions, scoring, and level generation. It has no dependencies on Arduino hardware libraries. Uses Fixed-Point Math (coordinates * 10) for smooth sub-pixel movement on integers.
+- LCDRenderer (View): Handles all LCD drawing operations and camera scrolling. Implements a generic IRenderer interface.
+- GameController (Input): Reads inputs, debounces signals, and manages the game loop.
+
+##### Setup:
+![Setup1](Homework_5/Setup1.jpeg "Setup1")
+![Setup2](Homework_5/Setup2.jpeg "Setup2")
+
+##### [Video of project implementation](https://youtu.be/eG-Gui1AG5o?si=kAZVgHWj6xQReA40)
