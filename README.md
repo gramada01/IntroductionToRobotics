@@ -240,9 +240,9 @@ Create a side-scrolling platformer game (inspired by Super Mario) on a 16x2 LCD 
 
 ![Mario Jump](Homework_5/Mario_Jump.PNG "Mario Jump")
 
-3. Platform Block
+3. Platform
 
-![Platform Block](Homework_5/Platform_Block.PNG "Platform Block")
+![Platform](Homework_5/Platform.PNG "Platform")
 
 4. Enemy / Goomba
 
