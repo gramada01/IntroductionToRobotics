@@ -234,27 +234,27 @@ Create a side-scrolling platformer game (inspired by Super Mario) on a 16x2 LCD 
 
 1. Mario Run
 
-![Mario Run](Homework_5/Mario_Run.png "Mario Run")
+![Mario Run](Homework_5/Mario_Run.PNG "Mario Run")
 
 2. Mario Jump
 
-![Mario Jump](Homework_5/Mario_Jump.png "Mario Jump")
+![Mario Jump](Homework_5/Mario_Jump.PNG "Mario Jump")
 
 3. Platform Block
 
-![Platform Block](Homework_5/Platform_Block.png "Platform Block")
+![Platform Block](Homework_5/Platform_Block.PNG "Platform Block")
 
 4. Enemy / Goomba
 
-![Enemy](Homework_5/Enemy.png "Enemy")
+![Enemy](Homework_5/Enemy.PNG "Enemy")
 
 5. Coin
 
-![Coin](Homework_5/Coin.png "Coin")
+![Coin](Homework_5/Coin.PNG "Coin")
 
 6. Finish Flag
 
-![Finish Flag](Homework_5/Finish_Flag.png "Finish Flag")
+![Finish Flag](Homework_5/Finish_Flag.PNG "Finish Flag")
 
 #### Game Flow:
 
