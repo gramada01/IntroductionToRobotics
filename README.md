@@ -1,6 +1,10 @@
 # IntroductionToRobotics
 A repository for my Robotics course homeworks
 
+## Extra: Microprocesoare — pregătire examen
+
+- [Material rescris, reorganizat pentru acces rapid](./Microprocesoare_Pregatire_Examen.md)
+
 ## Homework #1 : RGB LED
 
 ### 1. Task:
